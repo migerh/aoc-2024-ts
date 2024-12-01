@@ -1,4 +1,5 @@
 import { Day, Solve } from "jsr:@mikehw/advent-of-code";
+import { zip } from "jsr:@lambdalisue/itertools";
 
 const parse = (input: string): [number[], number[]] => {
   const parsed = input.split(/\r?\n/).map((line) =>
@@ -22,10 +23,7 @@ const puzzle: Day = {
     first.sort(sorter);
     second.sort(sorter);
 
-    return first.reduce(
-      (sum, value, index) => sum + Math.abs(second[index] - value),
-      0
-    );
+    return zip(first, second).reduce((sum, [a, b]) => sum + Math.abs(b - a), 0);
   },
   part2: (input: string): number => {
     const [first, second] = parse(input);
